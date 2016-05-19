@@ -1,6 +1,12 @@
 package net.croz.mqtt.java.client;
 
-import org.eclipse.paho.client.mqttv3.*;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttClientPersistence;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.io.BufferedReader;
@@ -14,14 +20,11 @@ import java.io.InputStreamReader;
 public class MqttExampleClient {
 
     public static void main(String[] args) {
-        // MQTT broker address
         String broker = "tcp://192.168.99.100:1883";
-        // Use class name as client name
-        String clientId = MqttExampleClient.class.getSimpleName();
         MqttClientPersistence persistence = new MemoryPersistence();
 
         try {
-            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+            MqttClient sampleClient = new MqttClient(broker, "MqttExampleClient", persistence);
 
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
